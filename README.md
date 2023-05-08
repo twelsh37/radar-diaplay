@@ -11,7 +11,8 @@ Noting overly exciting I cover the following
  * Blit'ing
 
 ### The Image below shows how the App looks
-![image](https://user-images.githubusercontent.com/4956770/236953341-23b5c717-48fc-4328-8fef-4f6268f0c94c.png)
+![image](https://user-images.githubusercontent.com/4956770/236953749-2d6db794-c01d-4fce-87ae-2b07d99ebfa0.png = 400x400)
+
 
 
 
