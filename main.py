@@ -9,12 +9,10 @@
  Simpson College Computer Science
  http://programarcadegames.com/
  http://simpson.edu/computer-science/
-
-
 """
-# Import a library of functions called 'pygame'
 import pygame
 import math
+import random
 
 # Initialize pygame
 pygame.init()
@@ -31,6 +29,7 @@ SWEEP_LENGTH = 450
 CENTER_X = SCREEN_WIDTH // 2
 CENTER_Y = SCREEN_HEIGHT // 2
 PI = math.pi
+RADAR_AREA = PI * 900 * 900
 
 # Set up the font
 FS = pygame.font.Font('freesansbold.ttf', 32)
@@ -82,6 +81,18 @@ text_values = ['10', '20', '30', '40']
 # Define angle
 angle = 0
 
+# Load sprite
+dot = pygame.image.load('dot.png').convert_alpha()
+dot_rect = dot.get_rect()
+
+# Set initial position of sprite
+dot_rect.x = random.randint(0, SCREEN_WIDTH)
+dot_rect.y = random.randint(0, SCREEN_HEIGHT)
+
+# Define sprite speed and direction
+dot_speed = 1
+dot_direction = [1, 1]
+
 # Main loop
 while True:
     # Draw background
@@ -114,6 +125,22 @@ while True:
     x = SWEEP_LENGTH * math.sin(angle) + CENTER_X
     y = SWEEP_LENGTH * math.cos(angle) + CENTER_Y
     pygame.draw.line(screen, NEONGREEN, [CENTER_X, CENTER_Y], [x, y], 5)
+
+    # Move sprite
+    dot_rect.x += dot_speed * dot_direction[0]
+    dot_rect.y += dot_speed * dot_direction[1]
+
+    # Change sprite direction if it hits an edge
+    if dot_rect.x < 0 or dot_rect.x > SCREEN_WIDTH - dot_rect.width or dot_rect.y < 0 or dot_rect.y > SCREEN_HEIGHT - dot_rect.height:
+        # Change sprite direction randomly
+        dot_direction = [random.choice([-1, 2]), random.choice([-1, 1])]
+
+        # Move sprite back inside the radar area
+        dot_rect.x = random.randint(0, SCREEN_WIDTH - dot_rect.width)
+        dot_rect.y = random.randint(0, SCREEN_HEIGHT - dot_rect.height)
+
+    # Draw sprite
+    screen.blit(dot, dot_rect)
 
     # Increase angle
     angle -= 0.02
