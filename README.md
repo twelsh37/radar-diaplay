@@ -1,5 +1,5 @@
 # radar-diaplay
-Just come code i put together to help me understand abit about PyGame.
+Just some code I put together to help me understand a bit about PyGame.
 
 Noting overly exciting I cover the following
  * Fonts
