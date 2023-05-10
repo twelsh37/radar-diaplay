@@ -1,4 +1,4 @@
-# radar-diaplay
+# radar-display
 Just some code I put together to help me understand a bit about PyGame.
 
 Noting overly exciting I cover the following
