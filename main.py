@@ -10,6 +10,7 @@
  http://programarcadegames.com/
  http://simpson.edu/computer-science/
 """
+
 import pygame
 import math
 import random
@@ -29,7 +30,7 @@ SWEEP_LENGTH = 450
 CENTER_X = SCREEN_WIDTH // 2
 CENTER_Y = SCREEN_HEIGHT // 2
 PI = math.pi
-RADAR_AREA = PI * 900 * 900
+RADAR_AREA = PI * 450 * 450
 
 # Set up the font
 FS = pygame.font.Font('freesansbold.ttf', 32)
@@ -44,7 +45,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 # Load background image
-bg = pygame.image.load('bak_radar.png').convert()
+bg = pygame.image.load('img/bak_radar.png').convert()
 
 # Define box dimensions
 box_dimensions = [
@@ -82,7 +83,7 @@ text_values = ['10', '20', '30', '40']
 angle = 0
 
 # Load sprite
-dot = pygame.image.load('dot.png').convert_alpha()
+dot = pygame.image.load('img/dot.png').convert_alpha()
 dot_rect = dot.get_rect()
 
 # Set initial position of sprite
@@ -130,14 +131,13 @@ while True:
     dot_rect.x += dot_speed * dot_direction[0]
     dot_rect.y += dot_speed * dot_direction[1]
 
-    # Change sprite direction if it hits an edge
-    if dot_rect.x < 0 or dot_rect.x > SCREEN_WIDTH - dot_rect.width or dot_rect.y < 0 or dot_rect.y > SCREEN_HEIGHT - dot_rect.height:
-        # Change sprite direction randomly
-        dot_direction = [random.choice([-1, 2]), random.choice([-1, 1])]
-
-        # Move sprite back inside the radar area
-        dot_rect.x = random.randint(0, SCREEN_WIDTH - dot_rect.width)
-        dot_rect.y = random.randint(0, SCREEN_HEIGHT - dot_rect.height)
+    # Bounce sprite off edges
+    if dot_rect.left < 0 or dot_rect.right > SCREEN_WIDTH:
+        dot_direction[0] = -dot_direction[0]
+        dot_rect.x += dot_speed * dot_direction[0]
+    if dot_rect.top < 0 or dot_rect.bottom > SCREEN_HEIGHT:
+        dot_direction[1] = -dot_direction[1]
+        dot_rect.y += dot_speed * dot_direction[1]
 
     # Draw sprite
     screen.blit(dot, dot_rect)
